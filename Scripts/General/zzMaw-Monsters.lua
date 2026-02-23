@@ -1700,7 +1700,7 @@ mapLevels={
 ["pending"] = 
 {["Low"] = 1 , ["Mid"] = 1 , ["High"] = 1},
 
-["pending"] = 
+["Warehouse"] = 
 {["Low"] = 1 , ["Mid"] = 1 , ["High"] = 1},
 
 ["pending"] = 
@@ -4593,3 +4593,4 @@ function events.KeyDown(t)
 		end
 	end
 end
+
