@@ -158,3 +158,14 @@ evt.map[261] = function()
 	evt.StatusText{Str = 12}         -- "You pray at the shrine."
 end
 
+----------------------------------------
+-- Warehouse
+
+evt.hint[141] = evt.str[31]
+evt.map[141] = function()
+	if vars.WarehouseBought or vars.WarehouseTill and vars.WarehouseTill > Game.Time then
+		evt.MoveToMap{X = 48, Y = -512, Z = 1, Direction = 512, Icon = 9, Name = "zddb04.blv"}
+	else
+		evt.SetMessage(32)
+	end
+end
