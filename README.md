@@ -2,9 +2,9 @@
 ported from merge revamp from cthscr
 
 files to include :
-- Data/revamp.T.load (removed everything but string files for outc2 and zddb01 freehaven and warehouse)
-- Data/revamp_mm6.games.lod (removed everything but map files for outc2 and zddb01 freehaven and warehouse)
-- Data/zzWarehouse.T.lod (this only override mapstats.txt from zMaw.T.lod to include the warehouse)
+- Data/revamp.T.load (string files for outc2 and zddb04)
+- Data/revamp_mm6.games.lod (map files for outc2 and zddb04)
+- Data/zzWarehouse.T.lod (overrides mapstats.txt from zMaw.T.lod)
 - Scripts/Global/Quest_Warehouse.lua (gives dialog to the banker)
 - Scripts/Maps/zddb04.lua (warehouse map script)
 - Scripts/Maps/outc2.lua (existing file modified to include warehouse entrance)
