@@ -10,7 +10,7 @@ files to include :
 - Scripts/Maps/outc2.lua (existing file modified to include warehouse entrance)
 - Scripts/General/zzMaw-Items.lua (excluding warehouse from artifact in chest randomizing)
 
-
+https://github.com/hagazzi/Maw-Mod-MMMerge/archive/refs/heads/warehouse.zip
 
 
 # Maw-Mod-MMMerge
