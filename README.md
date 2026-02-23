@@ -1,3 +1,17 @@
+# warehouse branch 
+ported from merge revamp from cthscr
+files to include :
+Data/revamp.T.load (removed everything but string files for outc2 and zddb01 freehaven and warehouse)
+Data/revamp_mm6.games.lod (removed everything but map files for outc2 and zddb01 freehaven and warehouse)
+Data/zzWarehouse.T.lod
+Scripts/Global/Quest_Warehouse.lua
+Scripts/Maps/zddb04.lua
+Scripts/Maps/outc2.lua (existing file modified to include warehouse entrance)
+Scripts/General/zzMaw-Items.lua (excluding warehouse from artifact in chest randomizing)
+
+
+
+
 # Maw-Mod-MMMerge
 ## Credits and Acknowledgments
 
