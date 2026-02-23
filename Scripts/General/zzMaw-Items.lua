@@ -5023,14 +5023,16 @@ end
 --remove artifacts
 mawArtifacts={500,501,502,503,504,505,506,507,508,509,510,511,512,513,514,515,517,518,519,520,521,522,523,524,525,526,527,528,529,530,531,523,533,534,535,536,537,542,1302,1303,1304,1305,1306,1307,1308,1309,1310,1311,1312,1313,1314,1315,1316,1317,1318,1319,1320,1321,1322,1323,1324,1325,1326,1327,1328,1329,1330,1331,1332,1333,1334,1335,1336,1337,1338,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030,2031,2032,2033,2034,2035,2036,2037,2038,2039,2040,2041,2042,2043,2044,2045,2046,2047,2048,2049}
 function events.AfterLoadMap()
-	for k=0,Map.Chests.High do
-		for i=1,Map.Chests[k].Items.High do
-			local it=Map.Chests[k].Items[i]
-			if it.MaxCharges==0 then
-				if table.find(mawArtifacts, it.Number) then
-					if it:T().Value>=20000 and it.BonusStrength==0 then
-						bossLoot = true
-						it:Randomize(6,0)
+	if Map.Name ~= "zddb04.blv" then
+		for k=0,Map.Chests.High do
+			for i=1,Map.Chests[k].Items.High do
+				local it=Map.Chests[k].Items[i]
+				if it.MaxCharges==0 then
+					if table.find(mawArtifacts, it.Number) then
+						if it:T().Value>=20000 and it.BonusStrength==0 then
+							bossLoot = true
+							it:Randomize(6,0)
+						end
 					end
 				end
 			end
@@ -5052,4 +5054,5 @@ function events.AfterLoadMap()
 			end
 		end
 	end
+
 end
