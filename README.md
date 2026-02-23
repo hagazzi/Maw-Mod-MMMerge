@@ -9,6 +9,7 @@ files to include :
 - Scripts/Maps/zddb04.lua (warehouse map script)
 - Scripts/Maps/outc2.lua (existing file modified to include warehouse entrance)
 - Scripts/General/zzMaw-Items.lua (excluding warehouse from artifact in chest randomizing)
+- Scripts/General/zzMaw-Monsters.lua (including warehouse in mapLevels [3rd pending after dragonlair])
 
 https://github.com/hagazzi/Maw-Mod-MMMerge/archive/refs/heads/warehouse.zip
 
