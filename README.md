@@ -2,7 +2,7 @@
 ported from merge revamp from cthscr
 
 files to include :
-- Data/revamp.T.load (string files for outc2 and zddb04)
+- Data/revamp.T.lod (string files for outc2 and zddb04)
 - Data/revamp_mm6.games.lod (map files for outc2 and zddb04)
 - Data/zzWarehouse.T.lod (overrides mapstats.txt from zMaw.T.lod)
 - Scripts/Global/Quest_Warehouse.lua (gives dialog to the banker)
