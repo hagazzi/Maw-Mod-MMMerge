@@ -1,3 +1,12 @@
+local expertrecipes = {}
+local masterrecipes = {}
+local grandmasterrecipes = {}
+
+for i = 700, 711 do table.insert(expertrecipes, i) end
+for i = 712, 723 do table.insert(masterrecipes, i) end
+for i = 724, 731 do table.insert(grandmasterrecipes, i) end
+for i = 751, 754 do table.insert(grandmasterrecipes, i) end
+
 local potionList = {
 	["basic"] = {
 		[1] = { name= "Cure Wounds", potionId = 222, recipeId = 0, basePower = 10, basecost= 5, mats = {["red"] = 1}},
@@ -7,9 +16,7 @@ local potionList = {
 		[5] = { name= "Hexbane", potionId = 226, recipeId = 0, basePower = 10, basecost= 50, mats = {["red"] = 1, ["blue"] = 1}},
 		[6] = { name= "Lucidity", potionId = 227, recipeId = 0, basePower = 10, basecost= 50, mats = {["blue"] = 1, ["yellow"] = 1}},	
 	},
- 	["layered"] = {
-		--[x] = { name= "", potionId = , recipeId = , basePower = , basecost= , mats = {["red"] = 1},["blue"] = 1, ["yellow"] = 1}},
-		
+ 	["layered"] = {		
 		[1] = { name= "Haste", potionId = 228, recipeId = 700, basePower = 10, basecost= 150, mats = {["red"] = 2,["blue"] = 0, ["yellow"] = 1}},
 		[2] = { name= "Heroism", potionId = 229, recipeId = 701, basePower = 10, basecost= 150, mats = {["red"] = 2,["blue"] = 1, ["yellow"] = 0}},
 		[3] = { name= "Bless", potionId = 230, recipeId = 702, basePower = 10, basecost= 150, mats = {["red"] = 1,["blue"] = 1, ["yellow"] = 1}},
@@ -54,19 +61,128 @@ local potionList = {
 	},
 }
 
-function events.GameInitialized2()
+local fileNameToHouse = {
+	--mm8
+	["out01.odm"] = 110,
+	["out02.odm"] = 111,
+	["out03.odm"] = 112,
+	["out06.odm"] = 113,
+	["out13.odm"] = 114,
+	["d24.blv"] = 115,
+	--mm7
+	["7out01.odm"] = 116,
+	["7out02.odm"] = 117,
+	["7out03.odm"] = 118,
+	["7out04.odm"] = 119,
+	["7out05.odm"] = 120,
+	["7out06.odm"] = 121,
+	["7d25.blv"] = 122,
+	["7d26.blv"] = 123,
+	["7d24.blv"] = 124,
+	["7d29.blv"] = 125,
+	--mm6
+	["oute3.odm"] = 1213,
+	["oute2.odm"] = 1229,
+	["outc2.odm"] = 1259,
+	["outd1.odm"] = 1245,
+	["outc1.odm"] = 1274,
+	["outb2.odm"] = 1289,
+}
+
+local alchHouseToStore = {
+	--mm8
+	[110] = {sID= 112, str = 1}, --Dagger wound island
+	[111] = {sID= 113, str = 2}, --Ravenshore
+	[112] = {sID= 114, str = 3}, --Alvar
+	[113] = {sID= 115, str = 4}, --Shadowspire
+	[114] = {sID= 116, str = 6}, --Regna
+	[115] = {sID= 117, str = 5}, --Balthazar lair
+	--mm7
+	[116] = {sID= 118, str = 1}, --Emerald island
+	[117] = {sID= 119, str = 2}, --Harmondale
+	[118] = {sID= 120, str = 3}, --Erathia
+	[119] = {sID= 121, str = 3}, --Tularean Forest
+	[120] = {sID= 122, str = 5}, --Deyja
+	[121] = {sID= 123, str = 5}, --Bracada
+	[122] = {sID= 124, str = 6}, --Celeste
+	[123] = {sID= 125, str = 6}, --The Pit
+	[124] = {sID= 126, str = 4}, --Stone City
+	[125] = {sID= 127, str = 6}, --Castle Harmondale
+	--mm6
+	[1213] = {sID= 130, str = 1}, --Sorp
+	[1229] = {sID= 131, str = 2}, --Misty Island
+	[1259] = {sID= 131, str = 3}, --Free Haven (111) as a magic shop
+	[1245] = {sID= 132, str = 4}, --Silver Cove (110) as a magic shop
+	[1274] = {sID= 132, str = 5}, --Frozen Highland
+	[1289] = {sID= 133, str = 6}, --Blackshire	
+} 
+
+--functions
+
+local function isAlchemyShop(id)
+	local found = false
+	for i,e in pairs(alchHouseToStore) do
+		if e.sID == id then
+			found = true
+		end
+	end
+	return found
+end
+
+local function reshopWithRecipes()
+	local mapname = Map.Name
+	local currenthouse = fileNameToHouse[mapname]
+	local currentstore = alchHouseToStore[currenthouse].sID
+	local currentstr = alchHouseToStore[currenthouse].str
+	if currentstr < 3 then
+		for i = 0,5 do
+			Game.ShopSpecialItems[currentstore][i].Number = 220
+			Game.GuildItemIconPtr[i] = Game.IconsLod:LoadBitmapPtr(Game.ShopSpecialItems[currentstore][i]:T().Picture)
+		end	
+	end
+	if (currentstr == 3) or (currentstr == 4) then
+		for i = 0,5 do
+			local rnd = math.random(1,12)
+			local recipe = expertrecipes[rnd]
+			Game.ShopSpecialItems[currentstore][i].Number = recipe
+			Game.GuildItemIconPtr[i] = Game.IconsLod:LoadBitmapPtr(Game.ShopSpecialItems[currentstore][i]:T().Picture)
+		end	
+	end
+	if currentstr == 5 then
+		for i = 0,5 do
+			local rnd = math.random(1,12)
+			local recipe =  masterrecipes[rnd]
+			Game.ShopSpecialItems[currentstore][i].Number = recipe
+			Game.GuildItemIconPtr[i] = Game.IconsLod:LoadBitmapPtr(Game.ShopSpecialItems[currentstore][i]:T().Picture)
+		end	
+	end
+	if currentstr == 6 then
+		for i = 0,5 do
+			local rnd = math.random(1,12)
+			local recipe =  grandmasterrecipes[rnd]
+			Game.ShopSpecialItems[currentstore][i].Number = recipe
+			Game.GuildItemIconPtr[i] = Game.IconsLod:LoadBitmapPtr(Game.ShopSpecialItems[currentstore][i]:T().Picture)
+		end	
+	end
+end
+
+--events
+
+function events.GameInitialized2() --set recipes cost / recipes unused / recipes names after potion
 	local layeredcost = 150
 	local whitecost = 750
 	local blackcost = 2000
 	local layeredrecipecost = layeredcost * 10
 	local whiterecipecost = whitecost * 10
-	local blackrecipecost = blackcost * 10	
+	local blackrecipecost = blackcost * 10
+	
 	local recipetable = {}
 	local recipeindex = {
 		[1] = "layered",
 		[2] = "white",
 		[3] = "black",
 	}
+
 	for _,potioncategory in ipairs(recipeindex) do
 		for _,potion in ipairs(potionList[potioncategory]) do
 			local name = potion.name
@@ -79,6 +195,18 @@ function events.GameInitialized2()
 			end
 		end
 	end
+	
 	for k = 755,769 do Game.ItemsTxt[k].Name = "Unused "..Game.ItemsTxt[k].Name  end
 	for k = 1542,1573 do Game.ItemsTxt[k].Name = "Unused "..Game.ItemsTxt[k].Name  end
+end
+
+--Requires a change in ShopRefilled function to include id = d.eax in the cocall arguments in \Scripts\Structs\RemoveHouseRulesLimits.lua
+----events.cocall("ShopRefilled", Assortment, d.eax)
+function events.ShopRefilled(t,id) --refresh alchshop for special items 
+	if not id then return end
+	if vars and isAlchemyShop(id) then
+		if (Game.CurrentScreen == 13) then
+			reshopWithRecipes()
+		end
+	end
 end
